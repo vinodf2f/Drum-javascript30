@@ -5,13 +5,14 @@
   <meta charset="UTF-8">
   <title>JS Drum Kit</title>
   <link rel="stylesheet" href="style.css">
+ 
 </head>
 <body>
 <div class="container">
-<div class="topright">#javascript30<br><small>Press The Key</small> </div>
+<div class="topright">#javascript30<br><small>Press the key</small> </div>
 
 
-  <div class="keys">
+  <div class="keys" >
     <div data-key="65" class="key">
       <kbd>A</kbd>
       <span class="sound">clap</span>
@@ -67,7 +68,7 @@
 	{
 		const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
 		const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
-		
+		console.log(e);
 		if(!audio) return;
 		audio.currentTime = 0
 		audio.play();
@@ -75,18 +76,40 @@
 
 	};
 
-
+	
 		function removeTransition(e)
 		{
 			if (e.propertyName !== 'transform') return;
 			this.classList.remove('playing');
 		}
+
+
 		const keys = document.querySelectorAll('.key');
 		keys.forEach(key => key.addEventListener('transitionend',removeTransition));
 
+		
+		keys.forEach(key => key.addEventListener('click',playSound2));
+
+
+		function playSound2(e)
+		{
+		var c = e.currentTarget.attributes['data-key'].value;
+		//console.log(e);
+		const audio = document.querySelector(`audio[data-key="${c}"]`);
+		const key = document.querySelector(`.key[data-key="${c}"]`);
+		if(!audio) return;
+		audio.currentTime = 0
+		audio.play();
+		key.classList.add('playing');
+
+			
+		}
+		
+
+
 		window.addEventListener('keydown',playSound);
-	        window.addEventListener('ontouchstart',playSound);
-	
+		
+		
 	
 </script>
 </div>
